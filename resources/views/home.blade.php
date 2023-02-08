@@ -1,9 +1,25 @@
 @extends('layouts.app')
 
+@section('css')
+    <style>
+        .addition {
+            margin-bottom: 40px;
+        }
+
+        .btn-addition {
+            margin-top: 10px;
+        }
+
+        .token {
+            margin-top: 40px;
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="container">
         @if(\Request::route()->getName() == "add")
-            <div class="row justify-content-center">
+            <div class="row justify-content-center addition">
                 <div class="col-md-4">
                     <form method="post">
                         @csrf
@@ -12,14 +28,14 @@
                             <textarea class="form-control" name="description" id="exampleFormControlTextarea1"
                                       rows="3"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Add</button>
+                        <button type="submit" class="btn w-100 btn-primary btn-addition">Add</button>
                     </form>
                 </div>
             </div>
         @endif
 
         @if(\Request::route()->getName() == "edit")
-            <div class="row justify-content-center">
+            <div class="row justify-content-center addition">
                 <div class="col-md-4">
                     <form method="post">
                         @csrf
@@ -28,7 +44,7 @@
                             <textarea class="form-control" name="description" id="exampleFormControlTextarea1"
                                       rows="3">{!! $edit->description !!}</textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Edit</button>
+                        <button type="submit" class="btn w-100 btn-primary btn-addition">Edit</button>
                     </form>
                 </div>
             </div>
@@ -112,11 +128,23 @@
                 </div>
             </div>
 
-            <div class="col-md-5">
+            <div class="col-md-5 token">
                 <div class="card">
-                    <div class="card-header">{{ __('Personal Access Token') }}</div>
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-8">
+                                {{ __('Personal Access Token') }}
+                            </div>
+                            <div class="col-md-4">
+                                <a href="/home/token">reveal</a>
+                            </div>
+                        </div>
+                    </div>
+                    @if(\Request::route()->getName() == "token")
                     <div class="card-body">
-                        {!! Auth::user()->createToken('MyApp')->plainTextToken !!}</div>
+                        {!! Auth::user()->createToken('MyApp')->plainTextToken !!}
+                    </div>
+                    @endif
                 </div>
         </div>
     </div>

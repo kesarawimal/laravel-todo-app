@@ -60,13 +60,23 @@ class TaskController extends Controller
         ]);
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        $task = Task::find($request->id);
-        $task->status = $request->id;
+        $validator = Validator::make($request->all(), [
+            'description' => ['required', 'string']
+        ]);
+
+        if ($validator->fails()) {
+            toast($validator->errors()->first(), 'error');
+            return redirect()->back()->withInput();
+        }
+
+        $task = Task::find($id);
+        $task->description = $request->description;
         $task->save();
 
-
+        toast('The Task has updated successfully.', 'success');
+        return redirect('/home');
     }
 
 

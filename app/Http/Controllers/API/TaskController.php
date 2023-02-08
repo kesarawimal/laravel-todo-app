@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-class TaskController extends BaseController
+class TaskController extends Controller
 {
     public function todo()
     {
@@ -41,7 +42,7 @@ class TaskController extends BaseController
         return response()->json([
             'status' => true,
             'message' => "The Task has added successfully.",
-            'post' => $task
+            'task' => $task
         ], 200);
     }
 
@@ -61,7 +62,7 @@ class TaskController extends BaseController
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'description' => ['required', 'string']
+            'status' => ['required']
         ]);
 
         if ($validator->fails()) {
@@ -72,11 +73,14 @@ class TaskController extends BaseController
         }
 
         $task = Task::findorFail($id);
-        $task->description = $request->description;
+        $task->status = $request->status;
         $task->save();
 
-        toast('The Task has updated successfully.', 'success');
-        return redirect('/home');
+        return response()->json([
+            'status' => true,
+            'message' => "The Task has updated successfully.",
+            'task' => $task
+        ], 200);
     }
 
 }
