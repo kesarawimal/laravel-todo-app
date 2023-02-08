@@ -11,11 +11,13 @@ use Illuminate\Support\Facades\Validator;
 
 class TaskController extends Controller
 {
+    // fetch tasks based on given token and in pending state
     public function todo()
     {
         return Task::where('status', 0)->where('user_id', auth('sanctum')->user()->id)->get();
     }
 
+    // fetch tasks based on given token in completed state
     public function done()
     {
         return Task::where('status', 1)->where('user_id', auth('sanctum')->user()->id)->get();
