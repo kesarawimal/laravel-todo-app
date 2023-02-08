@@ -13,12 +13,12 @@ class TaskController extends Controller
 {
     public function todo()
     {
-        return Task::where('status', 0)->get();
+        return Task::where('status', 0)->where('user_id', auth('sanctum')->user()->id)->get();
     }
 
     public function done()
     {
-        return Task::where('status', 1)->get();
+        return Task::where('status', 1)->where('user_id', auth('sanctum')->user()->id)->get();
     }
 
     public function create(Request $request)

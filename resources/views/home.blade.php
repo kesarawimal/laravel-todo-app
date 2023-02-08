@@ -142,7 +142,7 @@
                     </div>
                     @if(\Request::route()->getName() == "token")
                     <div class="card-body">
-                        {!! Auth::user()->createToken('MyApp')->plainTextToken !!}
+                        {!! Auth::user()->createToken('ToDo')->plainTextToken !!}
                     </div>
                     @endif
                 </div>
